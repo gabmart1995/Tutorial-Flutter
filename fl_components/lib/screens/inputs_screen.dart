@@ -20,7 +20,7 @@ class InputScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Input and forms'),
+        title: const Text('Inputs and forms'),
       ),
       // scroll view
       body: SingleChildScrollView(
@@ -78,7 +78,7 @@ class InputScreen extends StatelessWidget {
 
                     // validate form fields
                     if ( !myFormKey.currentState!.validate()) {
-                      print('formulario no valido');
+                      print('form no validate');
                       return;
                     }
 
