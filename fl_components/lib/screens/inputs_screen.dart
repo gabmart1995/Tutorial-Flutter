@@ -70,6 +70,19 @@ class InputScreen extends StatelessWidget {
                 ),
                 const SizedBox( height: 30 ),
 
+                DropdownButtonFormField<String>(
+                  items: const [
+                    DropdownMenuItem( value: 'Admin', child: Text('Admin' )),
+                    DropdownMenuItem( value: 'SuperUser', child: Text('SuperUser' )),
+                    DropdownMenuItem( value: 'Developer', child: Text('Developer' )),
+                    DropdownMenuItem( value: 'Developer Jr.', child: Text('Developer Jr.' )),
+                  ],
+                  onChanged: ( value ) {
+                    formValues['role'] = value ?? 'Admin';
+                  },
+                ),
+                const SizedBox( height: 30 ),
+
                 ElevatedButton(
                   onPressed: () {
 
@@ -78,7 +91,7 @@ class InputScreen extends StatelessWidget {
 
                     // validate form fields
                     if ( !myFormKey.currentState!.validate()) {
-                      print('form no validate');
+                      print('no valid form');
                       return;
                     }
 

@@ -59,6 +59,13 @@ class AppRoutes {
       name: 'Inputs Screen',
       screen: const InputScreen(),
       icon: Icons.ice_skating_sharp
+    ),
+
+    MenuOption(
+        route: 'sliders',
+        name: 'Sliders Screen',
+        screen: const SliderScreen(),
+        icon: Icons.slideshow_rounded
     )
   ];
 
