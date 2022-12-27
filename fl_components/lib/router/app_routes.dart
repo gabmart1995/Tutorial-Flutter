@@ -66,6 +66,13 @@ class AppRoutes {
         name: 'Sliders Screen',
         screen: const SliderScreen(),
         icon: Icons.slideshow_rounded
+    ),
+    
+    MenuOption(
+        route: 'infinite',
+        icon: Icons.movie_creation,
+        name: 'InfiniteScroll & Pull to refresh',
+        screen: const ListViewBuilderScreen(),
     )
   ];
 
