@@ -35,6 +35,7 @@ class Movie {
   double voteAverage;
   int voteCount;
 
+  // getters
   get fullPosterImg {
 
     if ( posterPath != null ) {
@@ -43,6 +44,17 @@ class Movie {
 
     return const AssetImage('asset/no-image-2.png');
   }
+
+  get fullBackdropPath {
+
+    if ( backdropPath != null ) {
+      return 'https://image.tmdb.org/t/p/w500$backdropPath';
+    }
+
+    return const AssetImage('asset/no-image-2.png');
+  }
+
+
 
   factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 
