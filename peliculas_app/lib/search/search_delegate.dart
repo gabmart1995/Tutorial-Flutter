@@ -54,13 +54,15 @@ class MovieSearchDelegate extends SearchDelegate {
       return _emptyContainer();
     }
 
+    print('peticion http request');
+
     final moviesProvider = Provider.of<MoviesProvider>( context, listen: false );
 
     return FutureBuilder(
       future: moviesProvider.searchMovie( query ),
       builder: ( _, AsyncSnapshot<List<Movie>> snapshot ) {
 
-        if ( snapshot.hasData ) {
+        if ( !snapshot.hasData ) {
           return _emptyContainer();
         }
 
@@ -68,11 +70,40 @@ class MovieSearchDelegate extends SearchDelegate {
 
         return ListView.builder(
           itemCount: movies.length,
-          itemBuilder: ( _, int index ) =>
+          itemBuilder: ( _, int index ) => _MovieItem( movies[index] )
         );
       }
     );
   }
 }
 
-class _
+class _MovieItem extends StatelessWidget {
+
+  final Movie movie;
+
+  const _MovieItem( this.movie );
+
+  @override
+  Widget build(BuildContext context) {
+
+    movie.heroId = 'search-${movie.id}';
+
+    return ListTile(
+      leading: Hero(
+        tag: movie.heroId!,
+        child: FadeInImage(
+          placeholder: const AssetImage('assets/no-image.jpg'),
+          image: NetworkImage( movie.fullPosterImg ),
+          width: 50,
+          fit: BoxFit.contain,
+        ),
+      ),
+      title: Text( movie.title ),
+      subtitle: Text( movie.originalTitle ),
+      onTap: () {
+        Navigator.pushNamed( context, 'details', arguments:  movie );
+      },
+    );
+  }
+  
+}
