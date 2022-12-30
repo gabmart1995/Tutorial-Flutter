@@ -42,7 +42,7 @@ class Movie {
       return 'https://image.tmdb.org/t/p/w500$posterPath';
     }
 
-    return const AssetImage('asset/no-image-2.png');
+    return 'https://i.stack.imgur.com/GNhxO.png';
   }
 
   get fullBackdropPath {
@@ -51,7 +51,7 @@ class Movie {
       return 'https://image.tmdb.org/t/p/w500$backdropPath';
     }
 
-    return const AssetImage('asset/no-image-2.png');
+    return 'https://i.stack.imgur.com/GNhxO.png';
   }
 
 

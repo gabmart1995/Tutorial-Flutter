@@ -17,6 +17,8 @@ class MoviesProvider extends ChangeNotifier {
     onDisplayMovies = [],
     onPopularMovies = [];
 
+  Map<int, List<Cast>> moviesCast = {};
+
   MoviesProvider() {
     getNowPlayMovies();
     getPopularMovies();
@@ -56,5 +58,37 @@ class MoviesProvider extends ChangeNotifier {
     onPopularMovies = [ ...onPopularMovies,  ...popularResponse.results ];
 
     notifyListeners();
+  }
+
+  Future<List<Cast>> getMovieCast( int movieId ) async {
+
+    // verificamos que la pelicula este cargada en memoria
+    // sino sale la peticion https
+    if ( moviesCast.containsKey( movieId ) ) {
+      return moviesCast[movieId]!;
+    }
+
+    print('solicitando info del servidor');
+
+    // revisamos el mapa
+    final jsonData = await _getJsonData('3/movie/$movieId/credits');
+    final creditsResponse = CreditsResponse.fromJson( jsonData );
+
+    moviesCast[movieId] = creditsResponse.cast;
+
+    return creditsResponse.cast;
+  }
+
+  Future<List<Movie>> searchMovie( String query ) async {
+    Uri url = Uri.https( _baseUrl, '3/search/movie', {
+      'api_key': _apiKey,
+      'language': _language,
+      'query': query
+    });
+
+    final response = await http.get( url );
+    final searchResponse = SearchResponse.fromJson( response.body );
+
+    return searchResponse.results;
   }
 }
