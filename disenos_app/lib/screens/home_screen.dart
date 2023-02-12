@@ -1,4 +1,5 @@
 import 'package:disenos_app/widgets/background.dart';
+import 'package:disenos_app/widgets/card_table.dart';
 import 'package:disenos_app/widgets/page_title.dart';
 import 'package:disenos_app/widgets/custom_bottom_navigation.dart';
 
@@ -29,7 +30,10 @@ class _HomeBody extends StatelessWidget {
       child: Column(
         children: const <Widget> [
           // titles
-          PageTitle()
+          PageTitle(),
+
+          // card table
+          CardTable(),
         ],
       ),
     );
