@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:qr_scanner/pages/directions_page.dart';
 import 'package:qr_scanner/pages/map_page.dart';
 import 'package:qr_scanner/pages/maps_page.dart';
+
 import 'package:qr_scanner/providers/ui_provider.dart';
+import 'package:qr_scanner/providers/db_provider.dart';
 
 import 'package:qr_scanner/widgets/custom_navigation_bar.dart';
 import 'package:qr_scanner/widgets/scan_button.dart';
@@ -35,7 +37,13 @@ class HomePage extends StatelessWidget {
 class _HomePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     final currentIndex = (Provider.of<UIProvider>(context)).selectedOption;
+
+    // TO DO: leer base de datos
+    DBProvider.db.newScan(
+        ScanModel( value: 'https://google.com' )
+    );
 
     switch ( currentIndex ) {
       case 0:
