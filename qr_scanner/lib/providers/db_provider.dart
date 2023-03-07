@@ -68,9 +68,76 @@ class DBProvider {
     final db = await database;
     final response = await db.insert( 'Scans', scan.toJson() );
 
-    print( response );
-
     // ID del ultimo registro insertado
+    return response;
+  }
+  
+  Future<ScanModel?> getScanById( int id ) async {
+    final db = await database;
+    final response = await db.query(
+        'Scans',
+        where: 'id = ?',
+        whereArgs: [id]
+    );
+
+    return response.isEmpty
+      ? null
+      : ScanModel.fromJson( response.first );
+  }
+
+  Future<List<ScanModel>> getAllScans() async {
+    final db = await database;
+    final response = await db.query('Scans');
+
+    return response.isEmpty
+      ? []
+      : response.map(
+          ( scan ) => ScanModel.fromJson( scan )
+        ).toList();
+  }
+
+  Future<List<ScanModel>> getAllScansByType( String type ) async {
+    final db = await database;
+    final response = await db.query(
+      'Scans',
+      where: 'type = ?',
+      whereArgs: [type]
+    );
+
+    return response.isEmpty
+        ? []
+        : response.map(
+            ( scan ) => ScanModel.fromJson( scan )
+    ).toList();
+  }
+
+  Future<int> updateScan( ScanModel scan ) async {
+    final db = await database;
+    final response = await db.update(
+      'Scans',
+      scan.toJson(),
+      where: 'id = ?',
+      whereArgs: [scan.id]
+    );
+
+    return response;
+  }
+
+  Future<int> deleteScan( int id ) async {
+    final db = await database;
+    final response = await db.delete(
+        'Scans',
+        where: 'id = ?',
+        whereArgs: [id]
+    );
+
+    return response;
+  }
+
+  Future<int> deleteAllScans() async {
+    final db = await database;
+    final response = await db.delete('Scans');
+
     return response;
   }
 }

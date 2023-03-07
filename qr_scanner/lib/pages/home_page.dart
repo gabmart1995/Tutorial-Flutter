@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:qr_scanner/pages/directions_page.dart';
 import 'package:qr_scanner/pages/map_page.dart';
 import 'package:qr_scanner/pages/maps_page.dart';
+import 'package:qr_scanner/providers/scan_list_provider.dart';
 
 import 'package:qr_scanner/providers/ui_provider.dart';
 import 'package:qr_scanner/providers/db_provider.dart';
@@ -22,7 +23,15 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon( Icons.delete_forever ),
-            onPressed: () {},
+            onPressed: () {
+              final scanListProvider = Provider.of<ScanListProvider>(
+                context,
+                listen: false
+              );
+
+              // delete all scans
+              scanListProvider.deleteAll();
+            },
           )
         ],
       ),
@@ -40,16 +49,19 @@ class _HomePageBody extends StatelessWidget {
 
     final currentIndex = (Provider.of<UIProvider>(context)).selectedOption;
 
-    // TO DO: leer base de datos
-    DBProvider.db.newScan(
-        ScanModel( value: 'https://google.com' )
+    // use scan list provider
+    final scanListProvider = Provider.of<ScanListProvider>(
+        context,
+        listen: false
     );
 
     switch ( currentIndex ) {
       case 0:
-        return const MapPage();
+        scanListProvider.loadScansByType('geo');
+        return const MapsPage();
 
       case 1:
+        scanListProvider.loadScansByType('http');
         return const DirectionsPage();
 
       default:
